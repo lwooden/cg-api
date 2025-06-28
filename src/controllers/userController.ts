@@ -1,6 +1,7 @@
 import { Request, Response, NextFunction } from "express"
 import { drizzle } from "drizzle-orm/node-postgres"
-
+import { connectToDatabase } from "../database/mongoose"
+import User from "../database/user.model"
 import { usersTable } from "../db/schema"
 
 export const createUser = async (
@@ -9,17 +10,18 @@ export const createUser = async (
   next: NextFunction
 ) => {
   try {
-    let db = drizzle(process.env.DATABASE_URL!)
+    await connectToDatabase()
 
-    const { name, email } = req.body
+    const { name, username, email } = req.body
 
-    const user: typeof usersTable.$inferInsert = {
-      name: name,
-      email: email,
-    }
-    await db.insert(usersTable).values(user)
-    console.log("User created")
-    res.status(201).json(user)
+    const newUser = User.create({
+      name,
+      username,
+      email,
+    })
+    console.log("User Created")
+    console.log(newUser)
+    res.status(201).json(newUser)
   } catch (error) {
     next(error)
   }
