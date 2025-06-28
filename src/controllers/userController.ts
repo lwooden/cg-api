@@ -1,8 +1,6 @@
 import { Request, Response, NextFunction } from "express"
-import { drizzle } from "drizzle-orm/node-postgres"
 import { connectToDatabase } from "../database/mongoose"
 import User from "../database/user.model"
-import { usersTable } from "../db/schema"
 
 export const createUser = async (
   req: Request,
