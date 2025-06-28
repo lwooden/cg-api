@@ -3,7 +3,7 @@ import { model, models, Document, Schema } from "mongoose"
 export interface IUser extends Document {
   name: string
   username: string
-  churchId?: string
+  churchId?: Schema.Types.ObjectId
   email: string
   password?: string
   picture?: string
@@ -18,14 +18,10 @@ const UserScheme = new Schema({
     type: String,
     required: true,
   },
-  username: {
-    type: String,
-    required: true,
-    unique: true,
-  },
   churchId: {
-    type: String,
-    default: "",
+    type: Schema.Types.ObjectId,
+    ref: "Church",
+    default: "68604e2e7eee3cd91577cc85",
   },
   email: {
     type: String,
