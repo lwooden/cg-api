@@ -49,3 +49,17 @@ export const createProduct = async (
     next(error)
   }
 }
+
+export const getProducts = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    await connectToDatabase()
+    const product = await Product.find()
+    res.status(200).json(product)
+  } catch (error) {
+    next(error)
+  }
+}
