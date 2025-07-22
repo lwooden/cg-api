@@ -13,11 +13,6 @@ export interface IChurch extends Document {
 }
 
 const ChurchSchema = new Schema({
-  churchId: {
-    type: Schema.Types.ObjectId,
-    default: () => new Types.ObjectId(),
-    unique: true,
-  },
   name: {
     type: String,
     required: true,
@@ -45,6 +40,10 @@ const ChurchSchema = new Schema({
   picture: {
     type: String,
     default: "",
+  },
+  members: {
+    type: [{ type: Schema.Types.ObjectId, ref: "User" }],
+    ref: "User",
   },
   createdAt: {
     type: Date,
