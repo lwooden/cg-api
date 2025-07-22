@@ -10,15 +10,16 @@ export const createUser = async (
   try {
     await connectToDatabase()
 
-    const { name, username, email } = req.body
+    console.log(req.body)
 
-    const newUser = User.create({
+    const { name, picture, email } = req.body
+
+    const newUser = await User.create({
       name,
-      username,
+      picture,
       email,
     })
     console.log("User Created")
-    console.log(newUser)
     res.status(201).json(newUser)
   } catch (error) {
     next(error)
