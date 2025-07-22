@@ -13,15 +13,28 @@ export interface IUser extends Document {
   joinedAt: Date
 }
 
+// TODD: Add clerkId: string, roles: string[], username: string,
+
 const UserScheme = new Schema({
+  clerkId: {
+    type: String,
+    required: true,
+    unique: true,
+  },
+  roles: {
+    type: [String],
+    enum: ["member", "church-admin", "super-admin"],
+    default: ["member"],
+  },
   name: {
     type: String,
     required: true,
   },
-  churchId: {
+  church: {
     type: Schema.Types.ObjectId,
     ref: "Church",
-    default: "68604e2e7eee3cd91577cc85",
+    // default: "68604e2e7eee3cd91577cc85",
+    // TODO: think about making this default or not
   },
   email: {
     type: String,
